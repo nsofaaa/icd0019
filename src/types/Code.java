@@ -4,6 +4,9 @@ import java.util.Random;
 
 public class Code {
 
+    // ✅ Таблица теперь хранится внутри класса
+    private static final boolean[][] table = getSampleTable();
+
     public static void main(String[] args) {
 
         int[] numbers = {1, 3, -2, 9};
@@ -18,63 +21,82 @@ public class Code {
 
         System.out.println("Square Digits: " + squareDigits("a9b2"));
 
-        boolean[][] table = getSampleTable();
-
-        int isolatedCount = isolatedSquareCount(table);
+        int isolatedCount = isolatedSquareCount();
         System.out.println("Isolated squares count: " + isolatedCount);
 
-        // Исправленные вызовы
-        System.out.println("Is (0,9) isolated? " + isIsolated(table, 0, 9));
-        System.out.println("Is (5,7) isolated? " + isIsolated(table, 5, 7));
+        System.out.println("Is (0,9) isolated? " + isIsolated(0, 9));
+        System.out.println("Is (5,7) isolated? " + isIsolated(5, 7));
     }
 
     public static int sum(final int[] numbers) {
         int total = 0;
-        for (final int n : numbers) total += n;
+        for (final int n : numbers) {
+            total += n;
+        }
         return total;
     }
 
     public static double average(final int[] numbers) {
-        if (numbers.length == 0) return 0.0;
+        if (numbers.length == 0) {
+            return 0.0;
+        }
         return (double) sum(numbers) / numbers.length;
     }
 
     public static Integer minimumElement(final int[] integers) {
-        if (integers.length == 0) return null;
+        if (integers.length == 0) {
+            return null;
+        }
         int min = integers[0];
         for (int n : integers) {
-            if (n < min) min = n;
+            if (n < min) {
+                min = n;
+            }
         }
         return min;
     }
 
     public static String asString(final int[] elements) {
-        if (elements.length == 0) return "";
+        if (elements.length == 0) {
+            return "";
+        }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < elements.length; i++) {
             sb.append(elements[i]);
-            if (i < elements.length - 1) sb.append(", ");
+            if (i < elements.length - 1) {
+                sb.append(", ");
+            }
         }
         return sb.toString();
     }
 
     public static Character mode(final String input) {
-        if (input == null || input.isEmpty()) return null;
+        if (input == null || input.isEmpty()) {
+            return null;
+        }
+
         int[] count = new int[256];
-        for (char c : input.toCharArray()) count[c]++;
+
+        for (char c : input.toCharArray()) {
+            count[c]++;
+        }
+
         char result = input.charAt(0);
         int max = 0;
+
         for (char c : input.toCharArray()) {
             if (count[c] > max) {
                 max = count[c];
                 result = c;
             }
         }
+
         return result;
     }
 
     public static String squareDigits(final String s) {
         StringBuilder sb = new StringBuilder();
+
         for (char c : s.toCharArray()) {
             if (Character.isDigit(c)) {
                 int num = c - '0';
@@ -83,41 +105,59 @@ public class Code {
                 sb.append(c);
             }
         }
+
         return sb.toString();
     }
 
-    public static int isolatedSquareCount(boolean[][] table) {
+    // ✅ Без параметров
+    public static int isolatedSquareCount() {
         int isolatedCount = 0;
+
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
-                if (table[i][j] && isIsolated(table, i, j)) isolatedCount++;
-            }
-        }
-        return isolatedCount;
-    }
-
-    public static boolean isIsolated(final boolean[][] matrix, final int row, final int col) {
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-        for (int i = row - 1; i <= row + 1; i++) {
-            for (int j = col - 1; j <= col + 1; j++) {
-                if (i == row && j == col) continue;
-                if (i >= 0 && i < rows && j >= 0 && j < cols) {
-                    if (matrix[i][j]) return false;
+                if (table[i][j] && isIsolated(i, j)) {
+                    isolatedCount++;
                 }
             }
         }
+
+        return isolatedCount;
+    }
+
+    // ✅ Без передачи matrix
+    public static boolean isIsolated(final int row, final int col) {
+
+        int rows = table.length;
+        int cols = table[0].length;
+
+        for (int i = row - 1; i <= row + 1; i++) {
+            for (int j = col - 1; j <= col + 1; j++) {
+
+                if (i == row && j == col) {
+                    continue;
+                }
+
+                if (i >= 0 && i < rows && j >= 0 && j < cols) {
+                    if (table[i][j]) {
+                        return false;
+                    }
+                }
+            }
+        }
+
         return true;
     }
 
     private static boolean[][] getSampleTable() {
         boolean[][] table = new boolean[10][10];
         Random r = new Random(5);
+
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
                 table[i][j] = r.nextInt(5) < 2;
             }
         }
+
         return table;
     }
 }
