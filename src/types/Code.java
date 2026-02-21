@@ -1,6 +1,6 @@
 package icd0019types.src.types;
 
-import java.util.Random; //p
+import java.util.Random; //po
 
 public class Code {
 
