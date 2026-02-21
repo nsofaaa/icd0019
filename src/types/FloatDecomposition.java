@@ -1,10 +1,10 @@
 package icd0019types.src.types;
 
-import java.math.BigDecimal; //k
+import java.math.BigDecimal;
 
 public class FloatDecomposition {
     public static void main(String[] args) {
-        float[] values = {1, 2, 3, 4, 5, 6, 0.5f, 0.25f, 0.75f, 0.1f};
+        float[] values = {1f, 2f, 3f, 4f, 5f, 6f, 0.5f, 0.25f, 0.75f, 0.1f};
 
         for (float value : values) {
             int bits = Float.floatToIntBits(value);
@@ -13,9 +13,13 @@ public class FloatDecomposition {
             int mantissa = bits & 0x7FFFFF;
             float significand = 1.0f + (mantissa / (float) (1 << 23));
 
+            // Use String constructor for BigDecimal
             System.out.printf("%s = %s x 2^%s (%s)\n",
-                    value, new BigDecimal(significand),
-                    exponent, new BigDecimal(value));
+                    value,
+                    new BigDecimal(Float.toString(significand)),
+                    exponent,
+                    new BigDecimal(Float.toString(value))
+            );
         }
     }
 }

@@ -17,16 +17,15 @@ public class StackTrace {
         Integer profitConstant = readProfitConstant();
 
         if (profitConstant == null) {
-            profitConstant = 1; // default value to prevent NullPointerException
+            profitConstant = 1; // значение по умолчанию
         }
 
         return netCost + (0.1 * profitConstant * netCost);
     }
 
     public static Integer readProfitConstant() {
-        // Original code returns null
-        Integer result = null;
-        return result; //k
+        // Можно сразу вернуть null без промежуточной переменной
+        return null;
     }
 
 }

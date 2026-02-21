@@ -1,11 +1,11 @@
 package icd0019types.src.types;
 
-import java.util.Random; //p
+import java.util.Random;
 
 public class Code {
 
-    // ✅ Таблица теперь хранится внутри класса
-    private static final boolean[][] table = getSampleTable();
+    // ✅ Константа теперь в верхнем регистре
+    private static final boolean[][] TABLE = getSampleTable();
 
     public static void main(String[] args) {
 
@@ -109,13 +109,12 @@ public class Code {
         return sb.toString();
     }
 
-    // ✅ Без параметров
     public static int isolatedSquareCount() {
         int isolatedCount = 0;
 
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                if (table[i][j] && isIsolated(i, j)) {
+        for (int i = 0; i < TABLE.length; i++) {
+            for (int j = 0; j < TABLE[i].length; j++) {
+                if (TABLE[i][j] && isIsolated(i, j)) {
                     isolatedCount++;
                 }
             }
@@ -124,11 +123,10 @@ public class Code {
         return isolatedCount;
     }
 
-    // ✅ Без передачи matrix
     public static boolean isIsolated(final int row, final int col) {
 
-        int rows = table.length;
-        int cols = table[0].length;
+        int rows = TABLE.length;
+        int cols = TABLE[0].length;
 
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = col - 1; j <= col + 1; j++) {
@@ -138,7 +136,7 @@ public class Code {
                 }
 
                 if (i >= 0 && i < rows && j >= 0 && j < cols) {
-                    if (table[i][j]) {
+                    if (TABLE[i][j]) {
                         return false;
                     }
                 }
@@ -160,4 +158,5 @@ public class Code {
 
         return table;
     }
+
 }
