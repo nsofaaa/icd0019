@@ -20,7 +20,6 @@ public class Pmd {
         }
     }
 
-    // intentionally bad code
     public static boolean containsTrueCell(boolean[][] matrix) {
         boolean result = false;
         if (matrix[0][0]) {
