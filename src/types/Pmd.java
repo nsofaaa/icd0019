@@ -11,74 +11,45 @@ public class Pmd {
         System.out.println(countTrueRow(table));
     }
 
-    private static void printTable(boolean[][] table) {
-        for (boolean[] row : table) {
-            for (boolean element : row) {
+    private static void printTable(final boolean[][] table) {
+        for (final boolean[] row : table) {
+            for (final boolean element : row) {
                 System.out.print(element ? "X" : "O");
             }
             System.out.println();
         }
     }
 
-    // intentionally bad code
-    public static boolean containsTrueCell(boolean[][] matrix) {
-        boolean result = false;
-        if (matrix[0][0]) {
-            result = true;
+    public static boolean containsTrueCell(final boolean[][] matrix) {
+        for (final boolean[] row : matrix) {
+            for (final boolean cell : row) {
+                if (cell) {
+                    return true;
+                }
+            }
         }
-        if (matrix[0][1]) {
-            result = true;
-        }
-        if (matrix[0][2]) {
-            result = true;
-        }
-        if (matrix[1][0]) {
-            result = true;
-        }
-        if (matrix[1][1]) {
-            result = true;
-        }
-        if (matrix[1][2]) {
-            result = true;
-        }
-        if (matrix[2][0]) {
-            result = true;
-        }
-        if (matrix[2][1]) {
-            result = true;
-        }
-        if (matrix[2][2]) {
-            result = true;
-        }
-
-        return result;
+        return false;
     }
 
-    // intentionally bad code
-    public static int countTrueRow(boolean[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
-                if (matrix[i][j]) {
-                    int count = 0;
-                    for (int k = 0; k < matrix.length; k++) {
-                        if (matrix[i][k]) {
-                            count++;
-                        }
-                    }
-
-                    return count;
+    public static int countTrueRow(final boolean[][] matrix) {
+        for (final boolean[] row : matrix) {
+            int count = 0;
+            for (final boolean cell : row) {
+                if (cell) {
+                    count++;
                 }
+            }
+            if (count > 0) {
+                return count;
             }
         }
         return -1;
     }
 
     private static boolean[][] getSampleTable() {
-        boolean[][] matrix = new boolean[3][3];
-
+        final boolean[][] matrix = new boolean[3][3];
         matrix[2][1] = true;
         matrix[2][2] = true;
-
         return matrix;
     }
 
