@@ -1,4 +1,4 @@
-package types;
+package icd0019types.src.types;
 
 import java.math.BigDecimal;
 

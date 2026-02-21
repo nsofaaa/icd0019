@@ -1,4 +1,4 @@
-package types;
+package icd0019types.src.types;
 
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;

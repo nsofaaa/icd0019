@@ -1,110 +1,75 @@
-public static int sum(int[] numbers) {
-    int sum = 0;
-    for (int n : numbers) {
-        sum += n;
+package icd0019types.src.types;
+
+import java.util.Arrays;
+import java.util.Random;
+
+public class Code {
+
+    public static void main(String[] args) {
+
+        int[] numbers = {1, 3, -2, 9};
+
+        System.out.println(sum(numbers)); // 11
     }
-    return sum;
-}
 
-public static double average(int[] numbers) {
-    if (numbers.length == 0) return 0;
-    return (double) sum(numbers) / numbers.length;
-}
-
-public static Integer minimumElement(int[] integers) {
-    if (integers.length == 0) return null;
-
-    int min = integers[0];
-    for (int n : integers) {
-        if (n < min) min = n;
+    public static int sum(int[] numbers) {
+        return 0;
     }
-    return min;
-}
 
-public static String asString(int[] elements) {
-    String result = "";
+    public static double average(int[] numbers) {
+        return 0.0;
+    }
 
-    for (int i = 0; i < elements.length; i++) {
-        result += elements[i];
-        if (i < elements.length - 1) {
-            result += ", ";
+    public static Integer minimumElement(int[] integers) {
+        return null;
+    }
+
+    public static String asString(int[] elements) {
+        return "";
+    }
+
+    public static Character mode(String input) {
+        return null;
+    }
+
+    public static String squareDigits(String s) {
+        return "";
+    }
+
+    public static int isolatedSquareCount() {
+        boolean[][] table = getSampleTable();
+
+        int isolatedCount = 0;
+
+        // count isolates squares here
+
+        return isolatedCount;
+    }
+
+    public static boolean isIsolated(int row, int col) {
+        boolean[][] table = getSampleTable();
+
+        printTable(table);
+
+        return false;
+    }
+
+    private static void printTable(boolean[][] table) {
+        for (boolean[] row : table) {
+            System.out.println(Arrays.toString(row));
         }
     }
 
-    return result;
-}
+    private static boolean[][] getSampleTable() {
+        boolean[][] table = new boolean[10][10];
 
-public static Character mode(String input) {
-    if (input == null || input.length() == 0) return null;
-
-    int[] count = new int[256];
-
-    for (char c : input.toCharArray()) {
-        count[c]++;
-    }
-
-    char result = input.charAt(0);
-    int max = 0;
-
-    for (char c : input.toCharArray()) {
-        if (count[c] > max) {
-            max = count[c];
-            result = c;
-        }
-    }
-
-    return result;
-}
-
-public static String squareDigits(String s) {
-    String result = "";
-
-    for (char c : s.toCharArray()) {
-        if (Character.isDigit(c)) {
-            int num = Integer.parseInt("" + c);
-            result += num * num;
-        } else {
-            result += c;
-        }
-    }
-
-    return result;
-}
-
-public static boolean isIsolated(int row, int col) {
-    boolean[][] table = getSampleTable();
-
-    for (int i = row - 1; i <= row + 1; i++) {
-        for (int j = col - 1; j <= col + 1; j++) {
-
-            if (i == row && j == col) continue;
-
-            if (i >= 0 && i < table.length && j >= 0 && j < table[0].length) {
-                if (table[i][j]) {
-                    return false;
-                }
+        Random r = new Random(5);
+        for (boolean[] row : table) {
+            for (int i = 0; i < row.length; i++) {
+                row[i] = r.nextInt(5) < 2;
             }
         }
+
+        return table;
     }
-
-    return true;
-}
-
-public static int isolatedSquareCount() {
-    boolean[][] table = getSampleTable();
-
-    int count = 0;
-
-    for (int i = 0; i < table.length; i++) {
-        for (int j = 0; j < table[i].length; j++) {
-            if (table[i][j] && isIsolated(i, j)) {
-                count++;
-            }
-        }
-    }
-
-    return count;
-}
-
-void main() {
 }
