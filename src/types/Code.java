@@ -1,162 +1,150 @@
-package icd0019types.src.types;
+package types;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Code {
 
-    // ✅ Константа теперь в верхнем регистре
     private static final boolean[][] TABLE = getSampleTable();
 
     public static void main(String[] args) {
-
         int[] numbers = {1, 3, -2, 9};
+        System.out.println(sum(numbers)); // 11
 
-        System.out.println("Sum: " + sum(numbers));
-        System.out.println("Average: " + average(numbers));
-        System.out.println("Minimum: " + minimumElement(numbers));
-        System.out.println("As String: " + asString(numbers));
 
-        String s = "abccbc";
-        System.out.println("Mode: " + mode(s));
-
-        System.out.println("Square Digits: " + squareDigits("a9b2"));
-
-        int isolatedCount = isolatedSquareCount();
-        System.out.println("Isolated squares count: " + isolatedCount);
-
-        System.out.println("Is (0,9) isolated? " + isIsolated(0, 9));
-        System.out.println("Is (5,7) isolated? " + isIsolated(5, 7));
     }
 
-    public static int sum(final int[] numbers) {
-        int total = 0;
-        for (final int n : numbers) {
-            total += n;
+    public static int sum(int[] numbers) {
+        int sum = 0;
+        for (int value : numbers) {
+            sum += value;
         }
-        return total;
+        return sum;
     }
 
-    public static double average(final int[] numbers) {
+    public static double average(int[] numbers) {
         if (numbers.length == 0) {
-            return 0.0;
+            return 0;
         }
         return (double) sum(numbers) / numbers.length;
     }
 
-    public static Integer minimumElement(final int[] integers) {
-        if (integers.length == 0) {
+    public static Integer minimumElement(int[] numbers) {
+        if (numbers.length == 0) {
             return null;
         }
-        int min = integers[0];
-        for (int n : integers) {
-            if (n < min) {
-                min = n;
+        int min = numbers[0];
+        for (int value : numbers) {
+            if (value < min) {
+                min = value;
             }
         }
         return min;
     }
 
-    public static String asString(final int[] elements) {
-        if (elements.length == 0) {
+    public static String asString(int[] numbers) {
+        if (numbers.length == 0) {
             return "";
         }
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < elements.length; i++) {
-            sb.append(elements[i]);
-            if (i < elements.length - 1) {
+        for (int i = 0; i < numbers.length; i++) {
+            sb.append(numbers[i]);
+            if (i < numbers.length - 1) {
                 sb.append(", ");
             }
         }
         return sb.toString();
     }
 
-    public static Character mode(final String input) {
-        if (input == null || input.isEmpty()) {
+    public static Character mode(String input) {
+        if (input.isEmpty()) {
             return null;
         }
 
-        int[] count = new int[256];
-
+        int[] freq = new int[256];
         for (char c : input.toCharArray()) {
-            count[c]++;
+            freq[c]++;
         }
 
-        char result = input.charAt(0);
-        int max = 0;
-
+        char mostFrequent = input.charAt(0);
+        int maxCount = freq[mostFrequent];
         for (char c : input.toCharArray()) {
-            if (count[c] > max) {
-                max = count[c];
-                result = c;
+            if (freq[c] > maxCount) {
+                mostFrequent = c;
+                maxCount = freq[c];
             }
         }
-
-        return result;
+        return mostFrequent;
     }
 
-    public static String squareDigits(final String s) {
-        StringBuilder sb = new StringBuilder();
-
+    public static String squareDigits(String s) {
+        StringBuilder result = new StringBuilder();
         for (char c : s.toCharArray()) {
             if (Character.isDigit(c)) {
-                int num = c - '0';
-                sb.append(num * num);
+                int n = Character.getNumericValue(c);
+                result.append(n * n);
             } else {
-                sb.append(c);
+                result.append(c);
             }
         }
+        return result.toString();
+    }
 
-        return sb.toString();
+    public static boolean isIsolated(int row, int col) {
+        if (!TABLE[row][col]) {
+            return false;
+        }
+
+        for (int i = -1; i <= 1; i++) {
+            int newRow = row + i;
+            if (newRow < 0 || newRow >= TABLE.length) {
+                continue;
+            }
+
+            for (int j = -1; j <= 1; j++) {
+                int newCol = col + j;
+                if (newCol < 0 || newCol >= TABLE[0].length) {
+                    continue;
+                }
+                if (i == 0 && j == 0) {
+                    continue;
+                }
+                if (TABLE[newRow][newCol]) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public static int isolatedSquareCount() {
-        int isolatedCount = 0;
-
-        for (int i = 0; i < TABLE.length; i++) {
-            for (int j = 0; j < TABLE[i].length; j++) {
-                if (TABLE[i][j] && isIsolated(i, j)) {
-                    isolatedCount++;
+        int count = 0;
+        for (int row = 0; row < TABLE.length; row++) {
+            for (int col = 0; col < TABLE[row].length; col++) {
+                if (isIsolated(row, col)) {
+                    count++;
                 }
             }
         }
-
-        return isolatedCount;
+        return count;
     }
 
-    public static boolean isIsolated(final int row, final int col) {
-
-        int rows = TABLE.length;
-        int cols = TABLE[0].length;
-
-        for (int i = row - 1; i <= row + 1; i++) {
-            for (int j = col - 1; j <= col + 1; j++) {
-
-                if (i == row && j == col) {
-                    continue;
-                }
-
-                if (i >= 0 && i < rows && j >= 0 && j < cols) {
-                    if (TABLE[i][j]) {
-                        return false;
-                    }
-                }
-            }
+    private static void printTable(boolean[][] table) {
+        for (boolean[] row : table) {
+            System.out.println(Arrays.toString(row));
         }
-
-        return true;
     }
 
     private static boolean[][] getSampleTable() {
         boolean[][] table = new boolean[10][10];
-        Random r = new Random(5);
 
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                table[i][j] = r.nextInt(5) < 2;
+        Random r = new Random(5);
+        for (boolean[] row : table) {
+            for (int i = 0; i < row.length; i++) {
+                row[i] = r.nextInt(5) < 2;
             }
         }
 
         return table;
     }
-
 }

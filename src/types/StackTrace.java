@@ -1,10 +1,10 @@
-package icd0019types.src.types;
+package types;
 
 public class StackTrace {
 
     public static void main(String[] args) {
-        Double price = calculatePrice();
-        System.out.println("Final price: " + price);
+        calculatePrice();
+
     }
 
     public static Double calculatePrice() {
@@ -13,19 +13,18 @@ public class StackTrace {
     }
 
     public static Double calculateBasePrice() {
+        // some complex calculation that produces 100 as netCost
         Double netCost = 100D;
-        Integer profitConstant = readProfitConstant();
 
+        Integer profitConstant = readProfitConstant();
         if (profitConstant == null) {
-            profitConstant = 1; // значение по умолчанию
+            profitConstant = 0;
         }
 
         return netCost + (0.1 * profitConstant * netCost);
     }
 
     public static Integer readProfitConstant() {
-        // Можно сразу вернуть null без промежуточной переменной
         return null;
     }
-
 }
