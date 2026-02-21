@@ -4,7 +4,6 @@ public class Examples {
 
     public static void main(String[] args) {
 
-        // print to the console
         System.out.println("Hello!"); // Hello!
 
         // loop till conditions is met.
