@@ -16,7 +16,7 @@ public class Pmd {
             for (final boolean element : row) {
                 System.out.print(element ? "X" : "O");
             }
-            System.out.println();
+            System.out.println(); //k
         }
     }
 
