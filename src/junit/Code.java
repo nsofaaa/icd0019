@@ -1,25 +1,10 @@
 package junit;
 
 public class Code {
-
     public static boolean isSpecial(int candidate) {
-        if (candidate % 11 == 0) {
-            return true;
-        }
+        int remainder = candidate % 11;
 
-        if ((candidate + 1) % 11 == 0) {
-            return true;
-        }
-
-        if ((candidate + 2) % 11 == 0) {
-            return true;
-        }
-
-        if ((candidate + 3) % 11 == 0) {
-            return true;
-        }
-
-        return false;
+        return remainder == 0 || remainder <= 3;
     }
 
     public static int longestStreak(String inputString) {
