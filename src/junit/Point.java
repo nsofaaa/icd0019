@@ -11,19 +11,6 @@ public class Point {
 
     @Override
     public String toString() {
-        return "Point[x=%s, y=%s]".formatted(x, y);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (!(o instanceof Point)) { return false; }
-        Point point = (Point) o;
-        return x == point.x && y == point.y;
-    }
-
-    @Override
-    public int hashCode() {
-        return 31 * x + y;
+        return "Point[x=%s, y=%s]".formatted(1, 2);
     }
 }

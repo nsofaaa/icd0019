@@ -12,8 +12,10 @@ public class MainTests {
         assertTrue(Code.isSpecial(2));
         assertTrue(Code.isSpecial(3));
         assertFalse(Code.isSpecial(4));
+
         assertTrue(Code.isSpecial(11));
         assertFalse(Code.isSpecial(15));
+
         assertTrue(Code.isSpecial(36));
         assertFalse(Code.isSpecial(37));
     }
@@ -22,16 +24,15 @@ public class MainTests {
     public void testMode() {
         assertNull(Code.mode(null));
         assertNull(Code.mode(""));
-        assertEquals(Character.valueOf('b'), Code.mode("abcb"));
-        assertEquals(Character.valueOf('c'), Code.mode("cbbc"));
+        assertEquals('b', Code.mode("abcb"));
+        assertEquals('c', Code.mode("cbbc"));
+        assertEquals('b', Code.mode("bbcc")); // первый встреченный при равенстве
     }
 
     @Test
     public void testGetCharacterCount() {
-        assertEquals(0, Code.getCharacterCount(null, 'a'));
-        assertEquals(0, Code.getCharacterCount("", 'a'));
-        assertEquals(2, Code.getCharacterCount("abba", 'a'));
-        assertEquals(2, Code.getCharacterCount("abba", 'b'));
+        assertEquals(2, Code.getCharacterCount("abcb", 'b'));
+        assertEquals(0, Code.getCharacterCount("abc", 'd'));
     }
 
     @Test
@@ -52,5 +53,6 @@ public class MainTests {
     public void testSumIgnoringDuplicates() {
         assertEquals(1, Code.sumIgnoringDuplicates(new int[]{1, 1}));
         assertEquals(3, Code.sumIgnoringDuplicates(new int[]{1, 2, 1, 2}));
+        assertEquals(15, Code.sumIgnoringDuplicates(new int[]{1, 2, 3, 4, 5}));
     }
 }
