@@ -3,31 +3,51 @@ package junit;
 public class Code {
 
     public static boolean isSpecial(int candidate) {
-        return candidate % 11 <= 3;
+        if (candidate % 11 == 0) {
+            return true;
+        } else if ((candidate - 1) % 11 == 0) {
+            return true;
+        } else if ((candidate - 2) % 11 == 0) {
+            return true;
+        } else if ((candidate - 3) % 11 == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static int longestStreak(String inputString) {
-        if (inputString == null || inputString.isEmpty()) return 0;
-        char[] chars = inputString.toCharArray();
-        int max = 1, count = 1;
-        for (int i = 1; i < chars.length; i++) {
-            if (chars[i] == chars[i - 1]) count++;
-            else count = 1;
-            if (count > max) max = count;
+        if (inputString == null || inputString.isEmpty()) {
+            return 0;
         }
-        return max;
+        int maxStreak = 1;
+        int currentStreak = 1;
+        char[] chars = inputString.toCharArray();
+        for (int i = 1; i < chars.length; i++) {
+            if (chars[i] == chars[i - 1]) {
+                currentStreak++;
+            } else {
+                currentStreak = 1;
+            }
+            if (currentStreak > maxStreak) {
+                maxStreak = currentStreak;
+            }
+        }
+        return maxStreak;
     }
 
     public static Character mode(String inputString) {
-        if (inputString == null || inputString.isEmpty()) return null;
+        if (inputString == null || inputString.isEmpty()) {
+            return null;
+        }
         char[] chars = inputString.toCharArray();
-        int maxCount = 0;
         char result = chars[0];
-        for (int i = 0; i < chars.length; i++) {
-            int count = getCharacterCount(inputString, chars[i]);
+        int maxCount = 0;
+        for (char c : chars) {
+            int count = getCharacterCount(inputString, c);
             if (count > maxCount) {
                 maxCount = count;
-                result = chars[i];
+                result = c;
             }
         }
         return result;
@@ -35,34 +55,59 @@ public class Code {
 
     public static int getCharacterCount(String allCharacters, char targetCharacter) {
         int count = 0;
-        for (int i = 0; i < allCharacters.length(); i++)
-            if (allCharacters.charAt(i) == targetCharacter) count++;
+        char[] chars = allCharacters.toCharArray();
+        for (char c : chars) {
+            if (c == targetCharacter) {
+                count++;
+            }
+        }
         return count;
     }
 
     public static int[] removeDuplicates(int[] integers) {
-        if (integers == null) return new int[0];
+        if (integers == null || integers.length == 0) {
+            return new int[0];
+        }
         int[] temp = new int[integers.length];
-        int size = 0;
-        for (int i = 0; i < integers.length; i++) {
-            boolean exists = false;
-            for (int j = 0; j < size; j++) {
-                if (temp[j] == integers[i]) {
-                    exists = true;
+        int newSize = 0;
+        for (int value : integers) {
+            boolean found = false;
+            for (int i = 0; i < newSize; i++) {
+                if (temp[i] == value) {
+                    found = true;
                     break;
                 }
             }
-            if (!exists) temp[size++] = integers[i];
+            if (!found) {
+                temp[newSize] = value;
+                newSize++;
+            }
         }
-        int[] result = new int[size];
-        for (int i = 0; i < size; i++) result[i] = temp[i];
+        int[] result = new int[newSize];
+        for (int i = 0; i < newSize; i++) {
+            result[i] = temp[i];
+        }
         return result;
     }
 
     public static int sumIgnoringDuplicates(int[] integers) {
-        int[] unique = removeDuplicates(integers);
         int sum = 0;
-        for (int i = 0; i < unique.length; i++) sum += unique[i];
+        int[] seen = new int[integers.length];
+        int size = 0;
+        for (int value : integers) {
+            boolean alreadySeen = false;
+            for (int i = 0; i < size; i++) {
+                if (seen[i] == value) {
+                    alreadySeen = true;
+                    break;
+                }
+            }
+            if (!alreadySeen) {
+                sum += value;
+                seen[size] = value;
+                size++;
+            }
+        }
         return sum;
     }
 }
