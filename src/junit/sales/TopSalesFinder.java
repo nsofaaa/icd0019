@@ -20,10 +20,10 @@ public class TopSalesFinder {
         String[] ids = new String[0];
         int[] totals = new int[0];
 
-        for (int i = 0; i < records.length; i++) {
+        for (SalesRecord record : records) {
 
-            String id = records[i].productId();
-            int value = records[i].productPrice() * records[i].itemsSold();
+            String id = record.productId();
+            int value = record.productPrice() * record.itemsSold();
 
             int index = indexOf(ids, id);
 
@@ -49,18 +49,22 @@ public class TopSalesFinder {
 
     public void removeSalesRecordsFor(String id) {
 
-        SalesRecord[] temp = new SalesRecord[records.length];
-        int size = 0;
+        int count = 0;
 
-        for (int i = 0; i < records.length; i++) {
-            if (!records[i].productId().equals(id)) {
-                temp[size++] = records[i];
+        for (SalesRecord record : records) {
+            if (!record.productId().equals(id)) {
+                count++;
             }
         }
 
-        SalesRecord[] newArray = new SalesRecord[size];
-        for (int i = 0; i < size; i++) {
-            newArray[i] = temp[i];
+        SalesRecord[] newArray = new SalesRecord[count];
+        int index = 0;
+
+        for (SalesRecord record : records) {
+            if (!record.productId().equals(id)) {
+                newArray[index] = record;
+                index++;
+            }
         }
 
         records = newArray;
@@ -69,13 +73,18 @@ public class TopSalesFinder {
     public SalesRecord[] getAllRecordsPaged(int pageNumber, int pageSize) {
 
         int start = pageNumber * pageSize;
-        if (start >= records.length) return new SalesRecord[0];
+
+        if (start >= records.length) {
+            return new SalesRecord[0];
+        }
 
         int end = start + pageSize;
-        if (end > records.length) end = records.length;
+
+        if (end > records.length) {
+            end = records.length;
+        }
 
         int size = end - start;
-
         SalesRecord[] page = new SalesRecord[size];
 
         for (int i = 0; i < size; i++) {
@@ -93,12 +102,13 @@ public class TopSalesFinder {
         removeSalesRecordsFor(id);
     }
 
-    // ===== helper methods =====
-
     private int indexOf(String[] array, String value) {
         for (int i = 0; i < array.length; i++) {
-            if (array[i].equals(value)) return i;
+            if (array[i].equals(value)) {
+                return i;
+            }
         }
+
         return -1;
     }
 
@@ -110,6 +120,7 @@ public class TopSalesFinder {
         }
 
         newArray[array.length] = value;
+
         return newArray;
     }
 
@@ -121,11 +132,13 @@ public class TopSalesFinder {
         }
 
         newArray[array.length] = value;
+
         return newArray;
     }
 
-    private SalesRecordResult[] appendResult(SalesRecordResult[] array,
-                                             SalesRecordResult value) {
+    private SalesRecordResult[] appendResult(
+            SalesRecordResult[] array,
+            SalesRecordResult value) {
 
         SalesRecordResult[] newArray =
                 new SalesRecordResult[array.length + 1];
@@ -135,6 +148,7 @@ public class TopSalesFinder {
         }
 
         newArray[array.length] = value;
+
         return newArray;
     }
 }
