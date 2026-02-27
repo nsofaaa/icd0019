@@ -16,9 +16,10 @@ public class Code {
 
         int max = 1;
         int current = 1;
+        char[] chars = inputString.toCharArray();
 
-        for (int i = 1; i < inputString.length(); i++) {
-            if (inputString.charAt(i) == inputString.charAt(i - 1)) {
+        for (int i = 1; i < chars.length; i++) {
+            if (chars[i] == chars[i - 1]) {
                 current++;
                 if (current > max) {
                     max = current;
@@ -39,10 +40,8 @@ public class Code {
         char bestChar = inputString.charAt(0);
         int bestCount = 0;
 
-        for (int i = 0; i < inputString.length(); i++) {
-            char current = inputString.charAt(i);
+        for (char current : inputString.toCharArray()) {
             int count = getCharacterCount(inputString, current);
-
             if (count > bestCount) {
                 bestCount = count;
                 bestChar = current;
@@ -58,27 +57,25 @@ public class Code {
         }
 
         int count = 0;
-
-        for (int i = 0; i < allCharacters.length(); i++) {
-            if (allCharacters.charAt(i) == targetCharacter) {
+        for (char c : allCharacters.toCharArray()) {
+            if (c == targetCharacter) {
                 count++;
             }
         }
-
         return count;
     }
 
     public static int[] removeDuplicates(int[] integers) {
         if (integers == null) {
-            return null;
+            return new int[0];
         }
 
         int[] temp = new int[integers.length];
         int size = 0;
 
-        for (int i = 0; i < integers.length; i++) {
-            if (!contains(temp, size, integers[i])) {
-                temp[size] = integers[i];
+        for (int val : integers) {
+            if (!contains(temp, size, val)) {
+                temp[size] = val;
                 size++;
             }
         }
@@ -106,12 +103,10 @@ public class Code {
         }
 
         int[] unique = removeDuplicates(integers);
-
         int sum = 0;
-        for (int i = 0; i < unique.length; i++) {
-            sum += unique[i];
+        for (int val : unique) {
+            sum += val;
         }
-
         return sum;
     }
 }

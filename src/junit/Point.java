@@ -1,7 +1,5 @@
 package junit;
 
-import java.util.Objects;
-
 public class Point {
     public final int x;
     public final int y;
@@ -18,8 +16,8 @@ public class Point {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Point)) return false;
+        if (this == o) { return true; }
+        if (!(o instanceof Point)) { return false; }
         Point point = (Point) o;
         return x == point.x && y == point.y;
     }

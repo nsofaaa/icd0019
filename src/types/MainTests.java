@@ -56,7 +56,7 @@ public class MainTests {
     }
 
     @Test
-    public void createsStringFromArray() { //k
+    public void createsStringFromArray() {
         assertThat(Code.asString(new int[] { 1, 3, -2, 9 })).isEqualTo("1, 3, -2, 9");
 
         assertThat(Code.asString(new int[] { })).isEmpty();
