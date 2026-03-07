@@ -33,6 +33,19 @@ public class PointSet {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof PointSet other)) {
+            return false;
+        }
+
+        return this.size() == other.size();
+    }
+
+    @Override
     public int hashCode() {
         return 0; // no need to change this
     }
