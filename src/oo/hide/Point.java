@@ -24,4 +24,9 @@ public class Point {
         return x == other.x && y== other.y;
     }
 
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(x, y);
+    }
+
 }
