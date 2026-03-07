@@ -76,7 +76,6 @@ public class PointSet {
                     (points[i] != null && points[i].equals(point))) {
 
                 points[i] = points[size - 1];
-                points[size - 1] = null;
                 size--;
                 return;
             }
