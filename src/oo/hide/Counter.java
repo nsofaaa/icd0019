@@ -2,16 +2,19 @@ package oo.hide;
 
 public class Counter {
 
-    private int value;
-    private int step;
+    private int currentValue;
+    private final int step;
 
     public Counter(int start, int step) {
-        this.value = start;
+        this.currentValue = start;
         this.step = step;
     }
 
     public int nextValue() {
-        value += step;
-        return value;
+        int result = currentValue;
+
+        currentValue += step;
+
+        return result;
     }
 }

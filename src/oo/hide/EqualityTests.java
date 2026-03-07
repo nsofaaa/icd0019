@@ -9,6 +9,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class EqualityTests {
 
     @Test
+    public void test() {
+        assertThat(new Point(1, 2))
+                .isEqualTo(new Point (1, 2));
+
+    }
+
+    @Test
     public void testsEquality() {
 
         assertFalse(new Point(1, 2) == new Point(1, 2));

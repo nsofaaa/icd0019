@@ -2,18 +2,15 @@ package oo.hide;
 
 public class Timer {
 
-    private long startTime;
+    private long start;
 
     public Timer() {
-        startTime = System.currentTimeMillis();
+        start = System.currentTimeMillis();
     }
 
     public String getPassedTime() {
+        long passedMills = System.currentTimeMillis() - start;
 
-        long now = System.currentTimeMillis();
-
-        long seconds = (now - startTime) / 1000;
-
-        return String.valueOf(seconds);
+        return Double.valueOf(passedMills) / 1000 + " sec";
     }
 }

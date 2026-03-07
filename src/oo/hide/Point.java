@@ -2,8 +2,8 @@ package oo.hide;
 
 public class Point {
 
-    public final int x;
-    public final int y;
+    private int x;
+    private int y;
 
     public Point(int x, int y) {
         this.x = x;
@@ -12,27 +12,16 @@ public class Point {
 
     @Override
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        return "Point[x=%s, y=%s]".formatted(x, y);
     }
 
     @Override
     public boolean equals(Object obj) {
-
-        if (this == obj) {
-            return true;
-        }
-
-        if (!(obj instanceof Point)) {
+        if (!(obj instanceof Point other)) {
             return false;
         }
 
-        Point other = (Point) obj;
-
-        return x == other.x && y == other.y;
+        return x == other.x && y== other.y;
     }
 
-    @Override
-    public int hashCode() {
-        return 0; // no need to change this
-    }
 }

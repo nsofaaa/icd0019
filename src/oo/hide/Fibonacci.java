@@ -2,22 +2,20 @@ package oo.hide;
 
 public class Fibonacci {
 
-    private int prev = 0;
-    private int curr = 1;
-    private boolean firstCall = true;
+    // 0 1 1 2 3 5 8
+
+    private int nMinus2 = 0;
+    private int nMinus1 = 1;
 
     public int nextValue() {
-        if (firstCall) {
-            firstCall = false;
-            return 0;
-        }
+        int result = nMinus2;
 
-        int result = curr;
-        int next = prev + curr;
+        int next = nMinus1 + nMinus2;
 
-        prev = curr;
-        curr = next;
+        nMinus2 = nMinus1;
+        nMinus1 = next;
 
         return result;
     }
+
 }
