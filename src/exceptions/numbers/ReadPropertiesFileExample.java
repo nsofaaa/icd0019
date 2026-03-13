@@ -22,7 +22,7 @@ public class ReadPropertiesFileExample {
 
             properties.load(reader);
         } catch (Exception e) {
-            // handle exceptions
+            throw new RuntimeException(e); // handle exceptions
         } finally {
             close(is);
         }
