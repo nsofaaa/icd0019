@@ -27,7 +27,6 @@ public class NumberConverter {
                 throw new BrokenLanguageFileException(lang, e);
             }
 
-            // для языка es файл может отсутствовать
             words = List.of();
         }
     }
