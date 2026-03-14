@@ -38,13 +38,13 @@ public class NumberConverter {
         }
 
         if (number < 0 || number >= words.size()) {
-            throw new MissingTranslationException("missing translation for " + number);
+            throw new MissingTranslationException("missing translation" + number);
         }
 
         String value = words.get(number);
 
         if (value == null || value.isEmpty()) {
-            throw new MissingTranslationException("missing translation for " + number);
+            throw new MissingTranslationException("missing translation" + number);
         }
 
         return value;
