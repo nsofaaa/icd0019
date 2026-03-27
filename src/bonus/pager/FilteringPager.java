@@ -62,7 +62,9 @@ public class FilteringPager {
 
             for (String val : page) {
 
-                if (val == null) continue;
+                if (val == null) {
+                    continue;
+                }
 
                 if (pageIndex == targetPage) {
                     result.add(val);
