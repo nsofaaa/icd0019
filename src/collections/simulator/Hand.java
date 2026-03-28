@@ -137,20 +137,44 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
 
     @Override
     public int compareTo(Hand other) {
+        // сначала тип руки
         int res = this.getHandType().compareTo(other.getHandType());
-        if (res != 0) {
-            return res;
-        }
+        if (res != 0) return res;
 
-        Collections.sort(this.cards);
-        Collections.sort(other.cards);
+        List<Card.CardValue> thisValues = getSortedValuesByCountAndRank(this);
+        List<Card.CardValue> otherValues = getSortedValuesByCountAndRank(other);
 
-        for (int i = this.cards.size() - 1; i >= 0; i--) {
-            int c = this.cards.get(i).compareTo(other.cards.get(i));
-            if (c != 0) {
-                return c;
-            }
+        for (int i = 0; i < thisValues.size(); i++) {
+            int cmp = thisValues.get(i).ordinal() - otherValues.get(i).ordinal();
+            if (cmp != 0) return cmp;
         }
         return 0;
     }
+
+    private List<Card.CardValue> getSortedValuesByCountAndRank(Hand hand) {
+        List<Card.CardValue> values = new ArrayList<>();
+        for (Card c : hand) values.add(c.getValue());
+
+        List<Card.CardValue> sorted = new ArrayList<>();
+        List<Card.CardValue> used = new ArrayList<>();
+        for (Card.CardValue v : Card.CardValue.values()) {
+            int count = 0;
+            for (Card.CardValue x : values) {
+                if (x == v) count++;
+            }
+            if (count > 0) {
+                for (int i = 0; i < count; i++) sorted.add(v);
+            }
+        }
+
+        sorted.sort((a, b) -> {
+            int countA = 0, countB = 0;
+            for (Card.CardValue x : values) { if (x==a) countA++; if (x==b) countB++; }
+            if (countA != countB) return countB - countA;
+            return b.ordinal() - a.ordinal();
+        });
+
+        return sorted;
+    }
+
 }
