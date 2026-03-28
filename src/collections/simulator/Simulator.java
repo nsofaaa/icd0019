@@ -63,7 +63,9 @@ public class Simulator {
         }
 
         for (int i = 0; i < iterations; i++) {
-            Collections.shuffle(deck);
+
+            List<Card> currentDeck = new ArrayList<>(deck);
+            Collections.shuffle(currentDeck);
 
             Hand h1 = new Hand();
             Hand h2 = new Hand();
@@ -76,7 +78,7 @@ public class Simulator {
             }
 
             for (int j = 0; j < 5; j++) {
-                Card tableCard = deck.get(j);
+                Card tableCard = currentDeck.get(j);
                 h1.addCard(tableCard);
                 h2.addCard(tableCard);
             }
