@@ -54,6 +54,7 @@ public class Simulator {
     public double getWinningOdds(Hand p1, Hand p2) {
         int wins = 0;
         List<Card> deck = createFullDeck();
+
         for (Card c : p1) {
             deck.remove(c);
         }
@@ -63,8 +64,10 @@ public class Simulator {
 
         for (int i = 0; i < iterations; i++) {
             Collections.shuffle(deck);
+
             Hand h1 = new Hand();
             Hand h2 = new Hand();
+
             for (Card c : p1) {
                 h1.addCard(c);
             }
@@ -73,14 +76,47 @@ public class Simulator {
             }
 
             for (int j = 0; j < 5; j++) {
-                h1.addCard(deck.get(j));
-                h2.addCard(deck.get(j));
+                Card tableCard = deck.get(j);
+                h1.addCard(tableCard);
+                h2.addCard(tableCard);
             }
 
-            if (h1.compareTo(h2) > 0) {
+            Hand best1 = getBestHand(h1);
+            Hand best2 = getBestHand(h2);
+
+            if (best1.compareTo(best2) > 0) {
                 wins++;
             }
         }
+
         return wins / iterations * 100;
+    }
+
+    private Hand getBestHand(Hand hand) {
+        List<Card> cards = new ArrayList<>();
+        for (Card c : hand) {
+            cards.add(c);
+        }
+
+        Hand best = null;
+
+        for (int i = 0; i < cards.size(); i++) {
+            for (int j = i + 1; j < cards.size(); j++) {
+
+                Hand temp = new Hand();
+
+                for (int k = 0; k < cards.size(); k++) {
+                    if (k != i && k != j) {
+                        temp.addCard(cards.get(k));
+                    }
+                }
+
+                if (best == null || temp.compareTo(best) > 0) {
+                    best = temp;
+                }
+            }
+        }
+
+        return best;
     }
 }
