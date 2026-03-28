@@ -52,7 +52,7 @@ public class Simulator {
     }
 
     public double getWinningOdds(Hand p1, Hand p2) {
-        int wins = 0;
+        double wins = 0;
         List<Card> deck = createFullDeck();
 
         for (Card c : p1) {
@@ -86,8 +86,12 @@ public class Simulator {
             Hand best1 = getBestHand(h1);
             Hand best2 = getBestHand(h2);
 
-            if (best1.compareTo(best2) > 0) {
-                wins++;
+            int cmp = best1.compareTo(best2);
+
+            if (cmp > 0) {
+                wins += 1;
+            } else if (cmp == 0) {
+                wins += 0.5;
             }
         }
 
