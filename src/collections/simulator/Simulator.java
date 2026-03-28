@@ -109,22 +109,17 @@ public class Simulator {
 
         for (int i = 0; i < cards.size(); i++) {
             for (int j = i + 1; j < cards.size(); j++) {
-                for (int k = j + 1; k < cards.size(); k++) {
-                    for (int l = k + 1; l < cards.size(); l++) {
-                        for (int m = l + 1; m < cards.size(); m++) {
 
-                            Hand temp = new Hand();
-                            temp.addCard(cards.get(i));
-                            temp.addCard(cards.get(j));
-                            temp.addCard(cards.get(k));
-                            temp.addCard(cards.get(l));
-                            temp.addCard(cards.get(m));
+                Hand temp = new Hand();
 
-                            if (best == null || temp.compareTo(best) > 0) {
-                                best = temp;
-                            }
-                        }
+                for (int k = 0; k < cards.size(); k++) {
+                    if (k != i && k != j) {
+                        temp.addCard(cards.get(k));
                     }
+                }
+
+                if (best == null || temp.compareTo(best) > 0) {
+                    best = temp;
                 }
             }
         }
