@@ -1,0 +1,11 @@
+package hide;
+
+public class Timer {
+
+    private final Long start = System.currentTimeMillis();
+
+    public String getPassedTime() {
+        double passedMills = System.currentTimeMillis() - start;
+        return String.format("%s sek", passedMills / 1000);
+    }
+}
