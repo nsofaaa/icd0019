@@ -137,44 +137,23 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
 
     @Override
     public int compareTo(Hand other) {
-        // сначала тип руки
         int res = this.getHandType().compareTo(other.getHandType());
-        if (res != 0) return res;
+        if (res != 0) {
+            return res;
+        }
 
-        List<Card.CardValue> thisValues = getSortedValuesByCountAndRank(this);
-        List<Card.CardValue> otherValues = getSortedValuesByCountAndRank(other);
+        List<Card> thisCards = new ArrayList<>(this.cards);
+        List<Card> otherCards = new ArrayList<>(other.cards);
 
-        for (int i = 0; i < thisValues.size(); i++) {
-            int cmp = thisValues.get(i).ordinal() - otherValues.get(i).ordinal();
-            if (cmp != 0) return cmp;
+        thisCards.sort((a, b) -> b.getValue().ordinal() - a.getValue().ordinal());
+        otherCards.sort((a, b) -> b.getValue().ordinal() - a.getValue().ordinal());
+
+        for (int i = 0; i < thisCards.size(); i++) {
+            int cmp = thisCards.get(i).getValue().ordinal() - otherCards.get(i).getValue().ordinal();
+            if (cmp != 0) {
+                return cmp;
+            }
         }
         return 0;
     }
-
-    private List<Card.CardValue> getSortedValuesByCountAndRank(Hand hand) {
-        List<Card.CardValue> values = new ArrayList<>();
-        for (Card c : hand) values.add(c.getValue());
-
-        List<Card.CardValue> sorted = new ArrayList<>();
-        List<Card.CardValue> used = new ArrayList<>();
-        for (Card.CardValue v : Card.CardValue.values()) {
-            int count = 0;
-            for (Card.CardValue x : values) {
-                if (x == v) count++;
-            }
-            if (count > 0) {
-                for (int i = 0; i < count; i++) sorted.add(v);
-            }
-        }
-
-        sorted.sort((a, b) -> {
-            int countA = 0, countB = 0;
-            for (Card.CardValue x : values) { if (x==a) countA++; if (x==b) countB++; }
-            if (countA != countB) return countB - countA;
-            return b.ordinal() - a.ordinal();
-        });
-
-        return sorted;
-    }
-
 }
