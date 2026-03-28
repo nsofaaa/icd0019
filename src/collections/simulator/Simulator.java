@@ -98,6 +98,7 @@ public class Simulator {
         return wins / iterations * 100;
     }
 
+
     private Hand getBestHand(Hand hand) {
         List<Card> cards = new ArrayList<>();
         for (Card c : hand) {
@@ -108,17 +109,22 @@ public class Simulator {
 
         for (int i = 0; i < cards.size(); i++) {
             for (int j = i + 1; j < cards.size(); j++) {
+                for (int k = j + 1; k < cards.size(); k++) {
+                    for (int l = k + 1; l < cards.size(); l++) {
+                        for (int m = l + 1; m < cards.size(); m++) {
 
-                Hand temp = new Hand();
+                            Hand temp = new Hand();
+                            temp.addCard(cards.get(i));
+                            temp.addCard(cards.get(j));
+                            temp.addCard(cards.get(k));
+                            temp.addCard(cards.get(l));
+                            temp.addCard(cards.get(m));
 
-                for (int k = 0; k < cards.size(); k++) {
-                    if (k != i && k != j) {
-                        temp.addCard(cards.get(k));
+                            if (best == null || temp.compareTo(best) > 0) {
+                                best = temp;
+                            }
+                        }
                     }
-                }
-
-                if (best == null || temp.compareTo(best) > 0) {
-                    best = temp;
                 }
             }
         }
