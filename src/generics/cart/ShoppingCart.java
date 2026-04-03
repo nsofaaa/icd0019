@@ -3,7 +3,7 @@ package generics.cart;
 import java.util.List;
 import java.util.Map;
 
-public class ShoppingCart<T> {
+public class ShoppingCart<T extends CartItem> {
 
     private final Map<String, Double> couponToDiscount = Map.of(
             "Sale5", 5.0,
@@ -35,7 +35,7 @@ public class ShoppingCart<T> {
     }
 
     public boolean applyCoupon(String coupon) {
-        throw new RuntimeException("not implemented yet");
+        return couponToDiscount.containsKey(coupon);
     }
 
     public Double getTotalDiscount() {
