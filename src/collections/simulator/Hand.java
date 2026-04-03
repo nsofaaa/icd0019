@@ -137,23 +137,41 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
 
     @Override
     public int compareTo(Hand other) {
+        // сначала тип руки
         int res = this.getHandType().compareTo(other.getHandType());
         if (res != 0) {
             return res;
         }
 
-        List<Card> thisCards = new ArrayList<>(this.cards);
-        List<Card> otherCards = new ArrayList<>(other.cards);
+        // создаём список значений по старшинству (просто по количеству повторов + значение)
+        List<Card.CardValue> thisValues = new ArrayList<>();
+        List<Card.CardValue> otherValues = new ArrayList<>();
 
-        thisCards.sort((a, b) -> b.getValue().ordinal() - a.getValue().ordinal());
-        otherCards.sort((a, b) -> b.getValue().ordinal() - a.getValue().ordinal());
+        for (Card c : this.cards) thisValues.add(c.getValue());
+        for (Card c : other.cards) otherValues.add(c.getValue());
 
-        for (int i = 0; i < thisCards.size(); i++) {
-            int cmp = thisCards.get(i).getValue().ordinal() - otherCards.get(i).getValue().ordinal();
-            if (cmp != 0) {
-                return cmp;
-            }
+        // простая сортировка: сначала по количеству повторов, затем по старшей карте
+        thisValues.sort((a, b) -> {
+            int countA = 0, countB = 0;
+            for (Card.CardValue x : thisValues) { if (x == a) countA++; }
+            for (Card.CardValue x : otherValues) { if (x == b) countB++; }
+            if (countA != countB) return countB - countA;
+            return b.ordinal() - a.ordinal();
+        });
+
+        otherValues.sort((a, b) -> {
+            int countA = 0, countB = 0;
+            for (Card.CardValue x : otherValues) { if (x == a) countA++; }
+            for (Card.CardValue x : thisValues) { if (x == b) countB++; }
+            if (countA != countB) return countB - countA;
+            return b.ordinal() - a.ordinal();
+        });
+
+        for (int i = 0; i < thisValues.size(); i++) {
+            int cmp = thisValues.get(i).ordinal() - otherValues.get(i).ordinal();
+            if (cmp != 0) return cmp;
         }
+
         return 0;
     }
 }
