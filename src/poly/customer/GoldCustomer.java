@@ -11,13 +11,13 @@ public final class GoldCustomer extends AbstractCustomer {
     @Override
     public void collectBonusPointsFrom(Order order) {
         if (order.getAmount() >= 100) {
-            this.bonusPoints += 300;
+            this.bonusPoints += (int) (order.getAmount() * 1.5);
             this.lastOrderDate = order.date();
         }
     }
 
     @Override
     public String asString() {
-        return "GOLD;" + id + ";" + name + ";" + bonusPoints + ";" + (lastOrderDate != null ? lastOrderDate : "");
+        return "GOLD;" + id + ";" + name + ";" + bonusPoints + (lastOrderDate != null ? ";" + lastOrderDate : "");
     }
 }

@@ -34,6 +34,10 @@ public abstract sealed class AbstractCustomer
         return bonusPoints;
     }
 
+    public LocalDate getLastOrderDate() {
+        return lastOrderDate;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null || this.getClass() != obj.getClass()) {
@@ -55,9 +59,5 @@ public abstract sealed class AbstractCustomer
     @Override
     public String toString() {
         return asString();
-    }
-
-    public LocalDate getLastOrderDate() {
-        return lastOrderDate;
     }
 }
