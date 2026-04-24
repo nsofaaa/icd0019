@@ -11,7 +11,8 @@ public final class RegularCustomer extends AbstractCustomer {
     @Override
     public void collectBonusPointsFrom(Order order) {
         if (order.getAmount() >= 100) {
-            int toAdd = order.getAmount();
+            int toAdd = 200;
+
             if (lastOrderDate != null && order.date().isBefore(lastOrderDate.plusMonths(1))) {
                 toAdd += 100;
             }
@@ -22,6 +23,6 @@ public final class RegularCustomer extends AbstractCustomer {
 
     @Override
     public String asString() {
-        return "REGULAR;" + id + ";" + name + ";" + bonusPoints + ";" + lastOrderDate;
+        return "REGULAR;" + id + ";" + name + ";" + bonusPoints + ";" + (lastOrderDate != null ? lastOrderDate : "");
     }
 }
