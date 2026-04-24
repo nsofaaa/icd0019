@@ -1,6 +1,5 @@
 package poly.customer;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 public abstract sealed class AbstractCustomer
@@ -9,17 +8,20 @@ public abstract sealed class AbstractCustomer
     protected String id;
     protected String name;
     protected int bonusPoints;
-    protected LocalDate lastOrderDate;
 
-    public AbstractCustomer(String id, String name, int bonusPoints, LocalDate lastOrderDate) {
+    public AbstractCustomer(String id, String name, int bonusPoints) {
         this.id = id;
         this.name = name;
         this.bonusPoints = bonusPoints;
-        this.lastOrderDate = lastOrderDate;
     }
 
     public abstract void collectBonusPointsFrom(Order order);
 
+    /**
+     * Provides string representation of the object.
+     * This string can be used for storing the object in text fail
+     * @return string representation of the object.
+     */
     public abstract String asString();
 
     public String getId() {
@@ -34,16 +36,14 @@ public abstract sealed class AbstractCustomer
         return bonusPoints;
     }
 
-    public LocalDate getLastOrderDate() {
-        return lastOrderDate;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
+
         AbstractCustomer other = (AbstractCustomer) obj;
+
         return Objects.equals(id, other.id) &&
                 Objects.equals(name, other.name) &&
                 Objects.equals(bonusPoints, other.bonusPoints);
@@ -58,4 +58,5 @@ public abstract sealed class AbstractCustomer
     public String toString() {
         return asString();
     }
+
 }

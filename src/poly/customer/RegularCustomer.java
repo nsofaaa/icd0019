@@ -5,25 +5,31 @@ import java.util.Objects;
 
 public final class RegularCustomer extends AbstractCustomer {
 
-    public RegularCustomer(String id, String name, int bonusPoints, LocalDate lastOrderDate) {
-        super(id, name, bonusPoints, lastOrderDate);
+    private LocalDate lastOrderDate;
+
+    public RegularCustomer(String id, String name,
+                           int bonusPoints, LocalDate lastOrderDate) {
+        super(id, name, bonusPoints);
+        this.lastOrderDate = lastOrderDate;
     }
 
     @Override
     public void collectBonusPointsFrom(Order order) {
         if (order.total() >= 100) {
-            int points = (int) order.total();
+            double multiplier = 1.0;
             if (lastOrderDate != null && order.date().isBefore(lastOrderDate.plusMonths(1))) {
-                points += 100;
+                multiplier = 1.5;
             }
-            this.bonusPoints += points;
-            this.lastOrderDate = order.date();
+            bonusPoints += (int) (order.total() * multiplier);
         }
+        lastOrderDate = order.date();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj) && Objects.equals(lastOrderDate, ((RegularCustomer) obj).lastOrderDate);
+        if (!super.equals(obj)) return false;
+        RegularCustomer that = (RegularCustomer) obj;
+        return Objects.equals(lastOrderDate, that.lastOrderDate);
     }
 
     @Override
@@ -33,6 +39,7 @@ public final class RegularCustomer extends AbstractCustomer {
 
     @Override
     public String asString() {
-        return "REGULAR;" + id + ";" + name + ";" + bonusPoints + ";" + lastOrderDate;
+        return String.format("REGULAR;%s;%s;%d;%s", id, name, bonusPoints, lastOrderDate);
     }
+
 }
