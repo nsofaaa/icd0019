@@ -25,7 +25,6 @@ public class CustomerTests {
         Integer pointsBefore = getPointsFor("c3");
 
         collector.gatherCustomerBonus("c3", new Order(200, currentDate()));
-
         assertThat(getPointsFor("c3")).isEqualTo(pointsBefore + 300);
     }
 
