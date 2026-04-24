@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public class CustomerRepository {
 
-    private static final String FILE_PATH = "src/poly/customer/data.txt";
-
     private List<AbstractCustomer> customers = new ArrayList<>();
 
     public CustomerRepository() {
@@ -44,6 +42,7 @@ public class CustomerRepository {
             return new GoldCustomer(customer.id, customer.name, customer.bonusPoints, customer.lastOrderDate);
         }
     }
+
     public List<AbstractCustomer> getAllPaged(int pageNumber, int pageSize) {
         return List.of(); // only needed for icd0019app project
     }

@@ -40,7 +40,9 @@ public abstract sealed class AbstractCustomer
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || this.getClass() != obj.getClass()) return false;
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
         AbstractCustomer other = (AbstractCustomer) obj;
         return Objects.equals(id, other.id) &&
                 Objects.equals(name, other.name) &&
