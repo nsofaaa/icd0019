@@ -41,7 +41,6 @@ public class RepositoryTests {
 
     @Test
     public void canUpdateCustomers() {
-
         RegularCustomer customer = new RegularCustomer(
                 "c4", "David", 0, LocalDate.now());
 

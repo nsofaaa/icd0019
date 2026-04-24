@@ -26,17 +26,9 @@ public abstract sealed class AbstractCustomer
      */
     public abstract String asString();
 
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getBonusPoints() {
-        return bonusPoints;
-    }
+    public String getId() { return id; }
+    public String getName() { return name; }
+    public Integer getBonusPoints() { return bonusPoints; }
 
     @Override
     public boolean equals(Object obj) {

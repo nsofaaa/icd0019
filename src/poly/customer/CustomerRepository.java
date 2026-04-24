@@ -10,6 +10,7 @@ public class CustomerRepository {
     private List<AbstractCustomer> customers = new ArrayList<>();
 
     public CustomerRepository() {
+        // Инициализация данных для CustomerTests
         save(new RegularCustomer("c1", "Alice", 0, LocalDate.parse("2024-03-10")));
         save(new RegularCustomer("c2", "Bob", 0, LocalDate.parse("2024-01-04")));
         save(new GoldCustomer("c3", "Carol", 0, null));
@@ -42,8 +43,6 @@ public class CustomerRepository {
             return new GoldCustomer(customer.id, customer.name, customer.bonusPoints, customer.lastOrderDate);
         }
     }
-
-    public List<AbstractCustomer> getAllPaged(int pageNumber, int pageSize) {
-        return List.of(); // only needed for icd0019app project
-    }
+    //public List<AbstractCustomer> getAllPaged(int pageNumber, int pageSize) {
+    //return List.of(); // only needed for icd0019app project
 }
