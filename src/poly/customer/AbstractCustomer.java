@@ -43,9 +43,7 @@ public abstract sealed class AbstractCustomer
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-
         AbstractCustomer other = (AbstractCustomer) obj;
-
         return Objects.equals(id, other.id) &&
                 Objects.equals(name, other.name) &&
                 Objects.equals(bonusPoints, other.bonusPoints);

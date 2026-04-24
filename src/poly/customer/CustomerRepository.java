@@ -17,13 +17,13 @@ public class CustomerRepository {
 
     public Optional<AbstractCustomer> getCustomerById(String id) {
         return customers.stream()
-                .filter(customer -> customer.getId().equals(id))
+                .filter(c -> c.getId().equals(id))
                 .map(this::copy)
                 .findFirst();
     }
 
     public void remove(String id) {
-        customers.removeIf(customer -> customer.getId().equals(id));
+        customers.removeIf(c -> c.getId().equals(id));
     }
 
     public void save(AbstractCustomer customer) {
@@ -35,11 +35,11 @@ public class CustomerRepository {
         return customers.size();
     }
 
-    private AbstractCustomer copy(AbstractCustomer customer) {
-        if (customer instanceof RegularCustomer) {
-            return new RegularCustomer(customer.id, customer.name, customer.bonusPoints, customer.lastOrderDate);
+    private AbstractCustomer copy(AbstractCustomer c) {
+        if (c instanceof RegularCustomer) {
+            return new RegularCustomer(c.id, c.name, c.bonusPoints, c.lastOrderDate);
         } else {
-            return new GoldCustomer(customer.id, customer.name, customer.bonusPoints, customer.lastOrderDate);
+            return new GoldCustomer(c.id, c.name, c.bonusPoints, c.lastOrderDate);
         }
     }
 
