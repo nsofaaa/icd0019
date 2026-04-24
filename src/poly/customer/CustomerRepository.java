@@ -11,7 +11,6 @@ import java.util.Optional;
 public class CustomerRepository {
 
     private static final String FILE_PATH = "src/poly/customer/data.txt";
-
     private List<AbstractCustomer> customers = new ArrayList<>();
 
     public CustomerRepository() {
@@ -20,10 +19,16 @@ public class CustomerRepository {
 
     private void load() {
         try {
-            List<String> lines = Files.readAllLines(Path.of(FILE_PATH));
+            Path path = Path.of(FILE_PATH);
+            if (!Files.exists(path)) {
+                return;
+            }
+            List<String> lines = Files.readAllLines(path);
             for (String line : lines) {
-                if (line.isBlank()) continue;
-                String[] parts = line.split(";");
+                if (line.isBlank()) {
+                    continue;
+                }
+                String[] parts = line.split(";", -1);
                 String type = parts[0];
                 String id = parts[1];
                 String name = parts[2];
@@ -32,10 +37,29 @@ public class CustomerRepository {
                 if ("GOLD".equals(type)) {
                     customers.add(new GoldCustomer(id, name, points));
                 } else if ("REGULAR".equals(type)) {
-                    LocalDate lastOrder = parts.length > 4 ? LocalDate.parse(parts[4]) : null;
+                    LocalDate lastOrder = (parts.length > 4 && !parts[4].isEmpty())
+                            ? LocalDate.parse(parts[4])
+                            : null;
                     customers.add(new RegularCustomer(id, name, points, lastOrder));
                 }
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void save(AbstractCustomer customer) {
+        customers.removeIf(c -> c.getId().equals(customer.getId()));
+        customers.add(customer);
+        saveToFile();
+    }
+
+    private void saveToFile() {
+        try {
+            List<String> lines = customers.stream()
+                    .map(AbstractCustomer::asString)
+                    .toList();
+            Files.write(Path.of(FILE_PATH), lines);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -48,24 +72,8 @@ public class CustomerRepository {
     }
 
     public void remove(String id) {
-        customers.removeIf(c -> c.getId().equals(id));
-        saveToFile();
-    }
-
-    public void save(AbstractCustomer customer) {
-        remove(customer.getId());
-        customers.add(customer);
-        saveToFile();
-    }
-
-    private void saveToFile() {
-        List<String> lines = customers.stream()
-                .map(AbstractCustomer::asString)
-                .toList();
-        try {
-            Files.write(Path.of(FILE_PATH), lines);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (customers.removeIf(c -> c.getId().equals(id))) {
+            saveToFile();
         }
     }
 

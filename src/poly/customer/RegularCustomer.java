@@ -20,16 +20,18 @@ public final class RegularCustomer extends AbstractCustomer {
             if (lastOrderDate != null && order.date().isBefore(lastOrderDate.plusMonths(1))) {
                 multiplier = 1.5;
             }
-            bonusPoints += (int) (order.total() * multiplier);
+            this.bonusPoints += (int) (order.total() * multiplier);
         }
-        lastOrderDate = order.date();
+        this.lastOrderDate = order.date();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!super.equals(obj)) return false;
-        RegularCustomer that = (RegularCustomer) obj;
-        return Objects.equals(lastOrderDate, that.lastOrderDate);
+        if (!super.equals(obj)) {
+            return false;
+        }
+        RegularCustomer other = (RegularCustomer) obj;
+        return Objects.equals(lastOrderDate, other.lastOrderDate);
     }
 
     @Override
@@ -39,7 +41,7 @@ public final class RegularCustomer extends AbstractCustomer {
 
     @Override
     public String asString() {
-        return String.format("REGULAR;%s;%s;%d;%s", id, name, bonusPoints, lastOrderDate);
+        String dateStr = (lastOrderDate != null) ? lastOrderDate.toString() : "";
+        return String.format("REGULAR;%s;%s;%d;%s", id, name, bonusPoints, dateStr);
     }
-
 }
