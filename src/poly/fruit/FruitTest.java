@@ -1,0 +1,24 @@
+package poly.fruit;
+
+import org.junit.jupiter.api.Test;
+import java.util.List;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+public class FruitTest {
+
+    @Test
+    public void computesTotalWeight() {
+
+        List<Weighable> fruits =
+                List.of(new Apple(0.1), new Orange(120));
+
+        assertThat(getTotalWeightInGrams(fruits), is(220));
+    }
+
+    private int getTotalWeightInGrams(List<Weighable> list) {
+        return list.stream()
+                .mapToInt(Weighable::getWeightInGrams)
+                .sum();
+    }
+}
