@@ -20,41 +20,44 @@ public abstract sealed class AbstractCustomer
 
     public abstract void collectBonusPointsFrom(Order order);
 
-    /**
-     * Provides string representation of the object.
-     * This string can be used for storing the object in text file.
-     * @return string representation of the object.
-     */
     public abstract String asString();
 
-    public String getId() { return id; }
-    public String getName() { return name; }
-    public Integer getBonusPoints() { return bonusPoints; }
+    public String getId() {
+        return id;
+    }
 
-    public LocalDate getLastOrderDate() {
-        return lastOrderDate;
+    public String getName() {
+        return name;
+    }
+
+    public Integer getBonusPoints() {
+        return bonusPoints;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
+
         AbstractCustomer other = (AbstractCustomer) obj;
+
         return Objects.equals(id, other.id) &&
                 Objects.equals(name, other.name) &&
-                bonusPoints == other.bonusPoints &&
-                Objects.equals(lastOrderDate, other.lastOrderDate);
+                Objects.equals(bonusPoints, other.bonusPoints);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, bonusPoints, lastOrderDate);
+        return Objects.hash(id, name, bonusPoints);
     }
 
     @Override
     public String toString() {
         return asString();
+    }
+
+    public LocalDate getLastOrderDate() {
+        return lastOrderDate;
     }
 }
