@@ -25,7 +25,8 @@ public class Game {
     public void toggle(int x, int y) {
         if (isAlive(x, y)) {
             aliveCells.removeIf(p -> p.x() == x && p.y() == y);
-        } else {
+        }
+        else {
             markAlive(x, y);
         }
     }
@@ -51,6 +52,7 @@ public class Game {
             for (int j = 0; j < 100; j++) {
                 int neighbors = getNeighbourCount(i, j);
                 boolean living = isAlive(i, j);
+
                 if (nextState(living, neighbors)) {
                     nextGeneration.add(new Point(i, j));
                 }
@@ -65,9 +67,18 @@ public class Game {
 
     public boolean nextState(boolean isLiving, int neighborCount) {
         if (isLiving) {
-            return neighborCount == 2 || neighborCount == 3;
-        } else {
-            return neighborCount == 3;
+            if (neighborCount == 2 || neighborCount == 3) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        else {
+            if (neighborCount == 3) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }
