@@ -58,23 +58,21 @@ public class Gui {
 
     private void nextFrame() {
         game.nextFrame();
-
         frame.repaint();
     }
 
     private void clear() {
         game.clear();
-
         frame.repaint();
     }
 
     private void togglePlay(Timer timer, JButton button) {
         isRunning = !isRunning;
-
         if (isRunning) {
             button.setText("Stop");
             timer.start();
-        } else {
+        }
+        else {
             button.setText("Start");
             timer.stop();
         }
@@ -90,21 +88,17 @@ public class Gui {
             for (int row = 0; row < rows; row++) {
                 for (int column = 0; column < columns; column++) {
                     boolean isAlive = game.isAlive(row, column);
-
                     drawCell(row, column, isAlive, g);
                 }
             }
         }
 
         private void drawCell(int row, int column, boolean isAlive, Graphics2D g) {
-
             Point coordinates = cellToPixels(row, column);
-
             Shape shape = new Rectangle2D.Float(
                     coordinates.x(), coordinates.y(),
                     CELL_SIZE, CELL_SIZE);
             g.setStroke(new BasicStroke(1));
-
             g.setPaint(isAlive ? Color.black : Color.white);
             g.fill(shape);
             g.setPaint(Color.black);
@@ -114,12 +108,11 @@ public class Gui {
         private Point cellToPixels(int row, int column) {
             int offsetX = column * CELL_SIZE;
             int offsetY = row * CELL_SIZE;
-
             return new Point(MARGIN + offsetX, MARGIN + offsetY);
         }
     }
 
-    private class MouseListener extends MouseAdapter {
+    class MouseListener extends MouseAdapter {
 
         private final Gui gui;
 
@@ -138,7 +131,6 @@ public class Gui {
 
             if (x < gui.rows && y < gui.columns) {
                 gui.game.toggle(x, y);
-
                 frame.repaint();
             }
         }
