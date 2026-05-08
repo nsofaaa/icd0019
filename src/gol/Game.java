@@ -52,7 +52,6 @@ public class Game {
             for (int j = 0; j < 100; j++) {
                 int neighbors = getNeighbourCount(i, j);
                 boolean living = isAlive(i, j);
-
                 if (nextState(living, neighbors)) {
                     nextGeneration.add(new Point(i, j));
                 }
@@ -67,18 +66,10 @@ public class Game {
 
     public boolean nextState(boolean isLiving, int neighborCount) {
         if (isLiving) {
-            if (neighborCount == 2 || neighborCount == 3) {
-                return true;
-            } else {
-                return false;
-            }
+            return neighborCount == 2 || neighborCount == 3;
         }
         else {
-            if (neighborCount == 3) {
-                return true;
-            } else {
-                return false;
-            }
+            return neighborCount == 3;
         }
     }
 }

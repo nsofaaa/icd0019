@@ -113,10 +113,9 @@ public class Gui {
     }
 
     class MouseListener extends MouseAdapter {
-
         private final Gui gui;
 
-        public MouseListener(Gui gui) {
+        MouseListener(Gui gui) {
             this.gui = gui;
         }
 
