@@ -13,6 +13,7 @@ public class Game {
         }
     }
 
+
     public boolean isAlive(int x, int y) {
         for (Point p : aliveCells) {
             if (p.x() == x && p.y() == y) {

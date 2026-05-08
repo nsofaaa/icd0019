@@ -7,5 +7,4 @@ public class Runner {
         new Gui(20, 15, new Game()).display();
 
     }
-
 }

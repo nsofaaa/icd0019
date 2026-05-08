@@ -93,6 +93,7 @@ public class Gui {
             }
         }
 
+
         private void drawCell(int row, int column, boolean isAlive, Graphics2D g) {
             Point coordinates = cellToPixels(row, column);
             Shape shape = new Rectangle2D.Float(
