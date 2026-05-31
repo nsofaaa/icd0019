@@ -7,8 +7,8 @@ public class FilteringPager {
 
     private final SimplePager dataSource;
     private final int pageSize;
-
     private int currentPage = 0;
+    private int elementIndex = 0;
 
     public FilteringPager(SimplePager dataSource, int pageSize) {
         this.dataSource = dataSource;
@@ -20,11 +20,29 @@ public class FilteringPager {
             throw new IllegalStateException();
         }
         currentPage++;
-        return loadPage(currentPage);
+        return getCurrentPage();
     }
 
     public List<String> getCurrentPage() {
-        return loadPage(currentPage);
+        List<String> result = new ArrayList<>();
+        int count = 0;
+        int targetStart = currentPage * pageSize;
+        int currentElement = 0;
+        int srcPage = 0;
+
+        while (dataSource.hasPage(srcPage)) {
+            for (String val : dataSource.getPage(srcPage)) {
+                if (val != null) {
+                    if (currentElement >= targetStart && count < pageSize) {
+                        result.add(val);
+                        count++;
+                    }
+                    currentElement++;
+                }
+            }
+            srcPage++;
+        }
+        return result;
     }
 
     public List<String> getPreviousPage() {
@@ -32,11 +50,12 @@ public class FilteringPager {
             throw new IllegalStateException();
         }
         currentPage--;
-        return loadPage(currentPage);
+        return getCurrentPage();
     }
 
     public boolean hasNextPage() {
-        return !loadPage(currentPage + 1).isEmpty();
+        int totalElements = countTotalElements();
+        return (currentPage + 1) * pageSize < totalElements;
     }
 
     public boolean hasPreviousPage() {
@@ -47,44 +66,23 @@ public class FilteringPager {
         return currentPage;
     }
 
-    private List<String> loadPage(int targetPage) {
-
-        List<String> result = new ArrayList<>();
-
+    private int countTotalElements() {
         int count = 0;
-        int pageIndex = 0;
-
         int srcPage = 0;
-
         while (dataSource.hasPage(srcPage)) {
-
-            List<String> page = dataSource.getPage(srcPage);
-
-            for (String val : page) {
-
-                if (val == null) {
-                    continue;
-                }
-
-                if (pageIndex == targetPage) {
-                    result.add(val);
-                }
-
-                count++;
-
-                if (count == pageSize) {
-                    count = 0;
-                    pageIndex++;
-
-                    if (pageIndex > targetPage) {
-                        return result;
-                    }
-                }
+            for (String val : dataSource.getPage(srcPage)) {
+                if (val != null) count++;
             }
-
             srcPage++;
         }
+        return count;
+    }
 
-        return result;
+    public int getElementIndex() {
+        return elementIndex;
+    }
+
+    public void setElementIndex(int elementIndex) {
+        this.elementIndex = elementIndex;
     }
 }
