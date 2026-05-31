@@ -32,11 +32,9 @@ public class FilteringPager {
         while (dataSource.hasPage(srcPage)) {
             for (String val : dataSource.getPage(srcPage)) {
                 if (val != null) {
-                    if (currentElement >= targetStart) {
-                        if (count < pageSize) {
-                            result.add(val);
-                            count++;
-                        }
+                    if (currentElement >= targetStart && count < pageSize) {
+                        result.add(val);
+                        count++;
                     }
                     currentElement++;
                 }
