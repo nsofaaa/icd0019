@@ -8,7 +8,6 @@ public class FilteringPager {
     private final SimplePager dataSource;
     private final int pageSize;
     private int currentPage = 0;
-    private int elementIndex = 0;
 
     public FilteringPager(SimplePager dataSource, int pageSize) {
         this.dataSource = dataSource;
@@ -33,9 +32,11 @@ public class FilteringPager {
         while (dataSource.hasPage(srcPage)) {
             for (String val : dataSource.getPage(srcPage)) {
                 if (val != null) {
-                    if (currentElement >= targetStart && count < pageSize) {
-                        result.add(val);
-                        count++;
+                    if (currentElement >= targetStart) {
+                        if (count < pageSize) {
+                            result.add(val);
+                            count++;
+                        }
                     }
                     currentElement++;
                 }
@@ -54,8 +55,22 @@ public class FilteringPager {
     }
 
     public boolean hasNextPage() {
-        int totalElements = countTotalElements();
-        return (currentPage + 1) * pageSize < totalElements;
+        int targetStart = (currentPage + 1) * pageSize;
+        int currentElement = 0;
+        int srcPage = 0;
+
+        while (dataSource.hasPage(srcPage)) {
+            for (String val : dataSource.getPage(srcPage)) {
+                if (val != null) {
+                    if (currentElement >= targetStart) {
+                        return true;
+                    }
+                    currentElement++;
+                }
+            }
+            srcPage++;
+        }
+        return false;
     }
 
     public boolean hasPreviousPage() {
@@ -64,25 +79,5 @@ public class FilteringPager {
 
     public int getCurrentPageNo() {
         return currentPage;
-    }
-
-    private int countTotalElements() {
-        int count = 0;
-        int srcPage = 0;
-        while (dataSource.hasPage(srcPage)) {
-            for (String val : dataSource.getPage(srcPage)) {
-                if (val != null) count++;
-            }
-            srcPage++;
-        }
-        return count;
-    }
-
-    public int getElementIndex() {
-        return elementIndex;
-    }
-
-    public void setElementIndex(int elementIndex) {
-        this.elementIndex = elementIndex;
     }
 }
